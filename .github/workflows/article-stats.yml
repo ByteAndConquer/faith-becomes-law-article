@@ -5,6 +5,7 @@ name: Article Stats & Citation Check
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -45,12 +46,12 @@ jobs:
 
           echo "**Word count per section:**" >> stats.md
           echo "" >> stats.md
-          if compgen -G "sections/*.md" > /dev/null; then
-            for file in sections/*.md; do
+          if [ -d sections ] && find sections -type f -name '*.md' -print -quit | grep -q .; then
+            while IFS= read -r -d '' file; do
               SECTION_NAME=$(basename "$file" .md | sed 's/^[0-9]*-//; s/-/ /g')
               WORDS=$(pandoc "$file" --to plain | wc -w | tr -d ' ')
               echo "- **$SECTION_NAME**: $WORDS words" >> stats.md
-            done
+            done < <(find sections -type f -name '*.md' -print0 | sort -z)
           else
             echo "- No section files found in sections/*.md" >> stats.md
           fi
@@ -96,12 +97,12 @@ jobs:
           from pathlib import Path
 
           content = Path("main.md").read_text(encoding="utf-8")
-          citation_blocks = re.findall(r"\[([^\]]*@[^\]]+)\]", content)
+          citation_blocks = re.findall(r"\[([^\]]*@[A-Za-z0-9_:\-.]+[^\]]*)\]", content)
 
           citations = set()
           for block in citation_blocks:
               for match in re.findall(r"@([A-Za-z0-9_:\-.]+)", block):
-                  citations.add(match)
+                  citations.add(match.rstrip(".,;:))}"))
 
           bib_path = Path("references.bib")
           if bib_path.exists():
@@ -109,6 +110,9 @@ jobs:
               bib_keys = set(re.findall(r"@\w+\s*\{\s*([^,\s]+)", bib))
           else:
               bib_keys = set()
+              if citations:
+                  print("⚠️ references.bib was not found.")
+                  print("")
 
           missing = sorted(citations - bib_keys)
 
@@ -122,8 +126,25 @@ jobs:
               print("✅ All citations found in references.bib.")
           EOF
 
+      - name: Print Report
+        if: always()
+        shell: bash
+        run: |
+          if [ -f stats.md ]; then
+            cat stats.md
+          else
+            echo "stats.md was not generated. Check the previous workflow steps for errors."
+          fi
+
+      - name: Upload Article Statistics Report
+        if: always() && hashFiles('stats.md') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: article-stats-report
+          path: stats.md
+
       - name: Post PR Comment
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && hashFiles('stats.md') != ''
         uses: actions/github-script@v7
         with:
           script: |
@@ -135,7 +156,3 @@ jobs:
               issue_number: context.payload.pull_request.number,
               body,
             });
-
-      - name: Print Report
-        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
-        run: cat stats.md
