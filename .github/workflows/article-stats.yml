@@ -41,16 +41,19 @@ jobs:
           echo "" >> stats.md
 
           TOTAL_WORDS=$(pandoc main.md --to plain | wc -w | tr -d ' ')
+          TOTAL_PARAGRAPHS=$(pandoc main.md --to plain | python3 -c 'import re, sys; text=sys.stdin.read().strip(); print(len([p for p in re.split(r"\n\s*\n+", text) if p.strip()]))')
           echo "**Total words**: $TOTAL_WORDS" >> stats.md
+          echo "**Total paragraphs**: $TOTAL_PARAGRAPHS" >> stats.md
           echo "" >> stats.md
 
-          echo "**Word count per section:**" >> stats.md
+          echo "**Word and paragraph count per section:**" >> stats.md
           echo "" >> stats.md
           if [ -d sections ] && find sections -type f -name '*.md' -print -quit | grep -q .; then
             while IFS= read -r -d '' file; do
               SECTION_NAME=$(basename "$file" .md | sed 's/^[0-9]*-//; s/-/ /g')
               WORDS=$(pandoc "$file" --to plain | wc -w | tr -d ' ')
-              echo "- **$SECTION_NAME**: $WORDS words" >> stats.md
+              PARAGRAPHS=$(pandoc "$file" --to plain | python3 -c 'import re, sys; text=sys.stdin.read().strip(); print(len([p for p in re.split(r"\n\s*\n+", text) if p.strip()]))')
+              echo "- **$SECTION_NAME**: $WORDS words, $PARAGRAPHS paragraphs" >> stats.md
             done < <(find sections -type f -name '*.md' -print0 | sort -z)
           else
             echo "- No section files found in sections/*.md" >> stats.md
