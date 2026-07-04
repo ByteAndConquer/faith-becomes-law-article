@@ -1,66 +1,116 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-# This workflow lets you generate SLSA provenance file for your project.
-# The generation satisfies level 3 for the provenance requirements - see https://slsa.dev/spec/v0.1/requirements
-# The project is an initiative of the OpenSSF (openssf.org) and is developed at
-# https://github.com/slsa-framework/slsa-github-generator.
-# The provenance file can be verified using https://github.com/slsa-framework/slsa-verifier.
-# For more information about SLSA and how it improves the supply-chain, visit slsa.dev.
-
 name: SLSA generic generator
+
 on:
   workflow_dispatch:
   release:
-    types: [created]
+    types: [published]
+
+permissions:
+  contents: read
 
 jobs:
   build:
+    name: Build article artifacts
     runs-on: ubuntu-latest
+
     outputs:
-      digests: ${{ steps.hash.outputs.digests }}
+      hashes: ${{ steps.hash.outputs.hashes }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      # ========================================================
-      #
-      # Step 1: Build your artifacts.
-      #
-      # ========================================================
-      - name: Build artifacts
+      - name: Install build dependencies
         run: |
-            # These are some amazing artifacts.
-            echo "artifact1" > artifact1
-            echo "artifact2" > artifact2
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y \
+            pandoc \
+            texlive-xetex \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            texlive-fonts-recommended
 
-      # ========================================================
-      #
-      # Step 2: Add a step to generate the provenance subjects
-      #         as shown below. Update the sha256 sum arguments
-      #         to include all binaries that you generate
-      #         provenance for.
-      #
-      # ========================================================
-      - name: Generate subject for provenance
-        id: hash
+      - name: Build artifacts
         run: |
           set -euo pipefail
 
-          # List the artifacts the provenance will refer to.
-          files=$(ls artifact*)
-          # Generate the subjects (base64 encoded).
-          echo "hashes=$(sha256sum $files | base64 -w0)" >> "${GITHUB_OUTPUT}"
+          mkdir -p output
+
+          if [ -f Makefile ]; then
+            make
+          elif [ -f main.md ]; then
+            pandoc main.md \
+              --from gfm \
+              --pdf-engine=xelatex \
+              --citeproc \
+              -o output/faith-becomes-law.pdf
+          else
+            echo "::error::No Makefile or main.md found. Nothing to build."
+            exit 1
+          fi
+
+          if ! find output -maxdepth 1 -type f | grep -q .; then
+            echo "::error::Build completed, but no files were created in output/."
+            exit 1
+          fi
+
+      - name: Generate subject for provenance
+        id: hash
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          cd output
+
+          sha256sum * > ../checksums.sha256
+          echo "hashes=$(base64 -w0 ../checksums.sha256)" >> "$GITHUB_OUTPUT"
+
+          cp ../checksums.sha256 checksums.sha256
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: article-output
+          path: output/*
+          if-no-files-found: error
+          retention-days: 14
 
   provenance:
+    name: Generate SLSA provenance
     needs: [build]
+
     permissions:
-      actions: read   # To read the workflow path.
-      id-token: write # To sign the provenance.
-      contents: write # To add assets to a release.
-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.4.0
+      actions: read
+      id-token: write
+      contents: write
+
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.1.0
     with:
-      base64-subjects: "${{ needs.build.outputs.digests }}"
-      upload-assets: true # Optional: Upload to a new release
+      base64-subjects: ${{ needs.build.outputs.hashes }}
+      upload-assets: ${{ github.event_name == 'release' }}
+
+  release-assets:
+    name: Upload release artifacts
+    needs: [build, provenance]
+    if: github.event_name == 'release'
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: article-output
+          path: dist
+
+      - name: Upload files to GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ github.event.release.tag_name }}
+        run: |
+          set -euo pipefail
+          gh release upload "$TAG_NAME" dist/* --clobber
