@@ -1,0 +1,11 @@
+# Politicized Evangelicalism and Christian Nationalism
+
+Politicized evangelicalism and Christian nationalism intensify the movement from faith as conscience to faith as political authority. These movements do not merely argue that Christians should participate in public life. They often imply, directly or indirectly, that the nation itself is properly Christian, that Christian identity should shape public legitimacy, and that political opposition to their agenda reflects moral or spiritual decline.
+
+This is not the same as ordinary religious participation in democracy. Religious citizens have every right to vote, organize, speak, protest, and advocate according to their beliefs. The problem begins when one religious identity becomes a test of national belonging. In that framework, Christianity is no longer simply a faith tradition; it becomes a political sorting mechanism. It distinguishes insiders from outsiders, patriots from threats, the morally legitimate from the morally suspect.
+
+Christian nationalism blurs the line between religious devotion and civic identity. It suggests that the nation is strongest, purest, or most authentic when governed according to a particular version of Christianity. That claim has profound consequences for pluralism. Non-Christians, secular citizens, religious minorities, and Christians outside conservative interpretations may be treated not merely as people with different beliefs, but as obstacles to national restoration.
+
+The emotional danger of this politics is that it turns disagreement into betrayal. If a political agenda is framed as God’s will, then opposition becomes more than democratic dissent; it becomes rebellion against divine order. That framing raises the stakes of every debate and lowers the possibility of compromise. Public life becomes spiritual warfare with campaign signs. Subtle, like a brick through a stained-glass window.
+
+The central danger of politicized evangelicalism and Christian nationalism is not that Christians seek influence. It is that some movements seek dominance while calling it freedom. They claim to defend religious liberty while supporting policies that restrict the liberty of those outside their worldview. That contradiction is not incidental. It is the mechanism. Religious freedom becomes the language of power rather than the protection of conscience.

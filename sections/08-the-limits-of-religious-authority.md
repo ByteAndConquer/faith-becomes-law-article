@@ -1,0 +1,11 @@
+# The Limits of Religious Authority
+
+A pluralistic democracy must distinguish between religious participation and religious domination. Religious authority may guide believers, shape communities, inspire moral debate, and motivate public action. It may call people toward compassion, justice, sacrifice, discipline, repentance, or reform. But religious authority should not define the rights of those who do not belong to it.
+
+This distinction is not hostility toward religion. It is the condition that allows religious freedom to exist. If one tradition gains the power to govern others through law, then religious freedom becomes unevenly distributed. Those inside the dominant tradition experience law as moral confirmation. Those outside it experience law as coercion. The same policy may feel like faithfulness to one group and captivity to another.
+
+The limits of religious authority are especially important in areas where law governs bodies, families, education, medicine, speech, and identity. These are not minor regulatory spaces. They are the places where people experience citizenship most intimately. A government that enforces one religious worldview in these areas does not merely express values; it reaches into private life and defines what kinds of lives are legitimate.
+
+This does not mean religious arguments must be excluded from public debate. Democracy cannot and should not demand that citizens amputate their conscience before entering politics. But public law requires public justification. In a society made of many religions and no religion, laws that bind everyone should not depend solely on doctrines that only some accept. Religious people may advocate. Religious institutions may speak. Religious communities may organize. But the state should not become the enforcement arm of any faith.
+
+The limit, then, is not speech. It is coercion. Faith may speak, persuade, plead, preach, and protest. It may not rightly use the machinery of the state to make outsiders live as unwilling members of the faith community. That boundary protects nonbelievers, religious minorities, dissenting Christians, and believers themselves. Religion loses something essential when it trades witness for domination. Power is a terrible spiritual director.

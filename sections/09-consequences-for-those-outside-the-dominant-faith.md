@@ -1,0 +1,11 @@
+# Consequences for Those Outside the Dominant Faith
+
+The consequences of religious political control are felt most sharply by those who stand outside the dominant faith or outside the dominant interpretation of that faith. Non-Christians, atheists, agnostics, women, LGBTQ people, religious minorities, students, patients, and progressive or dissenting Christians may all find themselves governed by doctrines they do not hold. The harm is not only legal. It is emotional, civic, and existential.
+
+When one religious worldview becomes politically dominant, people outside that worldview may be treated as problems to solve rather than citizens to protect. Their bodies become battlegrounds. Their families become policy disputes. Their identities become campaign material. Their books, classrooms, medical care, marriages, and private decisions become evidence in someone else’s moral panic. Nothing says “equal citizenship” like being turned into a fundraising email.
+
+This narrowing of citizenship can be especially damaging because it recasts exclusion as virtue. Policies that restrict rights may be framed as moral courage. Public hostility may be described as faithfulness. Legal inequality may be defended as religious freedom. In this environment, the language of morality can become a weapon against the people most in need of protection.
+
+The harm also reaches Christians who do not share the dominant political theology. Progressive Christians, mainline Protestants, Catholics with different political commitments, Black church traditions, queer Christians, and others may find their faith publicly misrepresented by a louder and more politically organized version of Christianity. One faction claims the authority to speak for the whole tradition, and the diversity within Christianity is flattened into a single political brand.
+
+When faith becomes law, the people outside the dominant faith do not experience it as spiritual guidance. They experience it as surveillance, restriction, and exclusion. The state becomes a moral enforcer rather than a protector of equal freedom. That is why the issue is not merely theoretical. It is lived in courtrooms, classrooms, clinics, families, workplaces, and public spaces. It is lived wherever someone is told that their freedom must shrink so another person’s theology can feel secure.
