@@ -1,0 +1,82 @@
+name: Build Article PDF + Submission Package
+
+on:
+  push:
+    tags:
+      - 'draft-*'
+      - 'v*'
+      - 'submission-*'
+
+jobs:
+  build:
+    # Use your self-hosted runner
+    runs-on: byteplease-runner-1
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Pandoc + TeX Live
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-xetex texlive-fonts-recommended zip
+
+      - name: Set version and filename
+        id: vars
+        run: |
+          VERSION=${GITHUB_REF_NAME}
+          TRUNCATED_TITLE="When_Faith_Becomes_Law"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "PDF_NAME=${TRUNCATED_TITLE}_${VERSION}.pdf" >> $GITHUB_ENV
+          echo "ZIP_NAME=${TRUNCATED_TITLE}_${VERSION}_submission_package.zip" >> $GITHUB_ENV
+
+      - name: Build PDF
+        run: |
+          mkdir -p output
+          pandoc main.md -o "output/${{ env.PDF_NAME }}" \
+            --from markdown \
+            --pdf-engine=xelatex \
+            --citeproc \
+            --bibliography=references.bib \
+            --csl=chicago-author-date.csl \
+            --toc \
+            --number-sections \
+            --variable=title:"When Faith Becomes Law: Christianity, Political Power, and the Limits of Religious Authority" \
+            --variable=author:"Your Name" \
+            --variable=date:"$(date +'%B %Y')"
+
+      - name: Create Clean Submission Package
+        run: |
+          mkdir -p submission_package
+          cp main.md abstract.md outline.md submission_package/ 2>/dev/null || true
+          cp references.bib submission_package/ 2>/dev/null || true
+          cp -r sections/ submission_package/ 2>/dev/null || true
+          cp README.md submission_package/ 2>/dev/null || true
+          
+          cat > submission_package/README_Submission.txt << EOF
+          Submission Package - When Faith Becomes Law
+          Version: ${{ env.VERSION }}
+          Generated: $(date)
+
+          Files included:
+          - main.md                  (full article)
+          - abstract.md
+          - outline.md
+          - sections/                (individual sections)
+          - references.bib
+          - ${{ env.PDF_NAME }}
+          EOF
+
+          cp "output/${{ env.PDF_NAME }}" submission_package/
+          cd submission_package && zip -r "../output/${{ env.ZIP_NAME }}" .
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Article_Build_${{ env.VERSION }}
+          path: |
+            output/*.pdf
+            output/*.zip
+          retention-days: 90
