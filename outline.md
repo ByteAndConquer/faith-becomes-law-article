@@ -60,7 +60,7 @@ Ask where religious authority should end in a pluralistic democracy. Distinguish
 
 ### IX. Consequences for Those Outside the Dominant Faith
 
-Discuss how religious political control affects non-Christians, atheists, agnostics, women, LGBTQ people, religious minorities, students, and Christians outside conservative evangelical traditions.
+Discuss how religious political control affects non-Christians, atheists, agnostics, women, LGBTQIA+ people, religious minorities, students, and Christians outside conservative evangelical traditions.
 
 **Main point:** When one religious worldview gains political power, everyone outside that worldview becomes vulnerable to exclusion or control.
 
