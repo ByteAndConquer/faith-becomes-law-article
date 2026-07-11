@@ -10,7 +10,7 @@ name: Build Article PDF and Submission Package
 
 jobs:
   build:
-    runs-on: byteplease-runner-1
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
