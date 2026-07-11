@@ -20,8 +20,8 @@ jobs:
 
       - name: Install build dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
+          apt-get update
+          apt-get install -y \
             pandoc \
             python3 \
             texlive-xetex \
