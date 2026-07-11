@@ -18,13 +18,17 @@ $(OUTPUT_DIR)/$(PDF_NAME): main.md references.bib
 	mkdir -p $(OUTPUT_DIR)
 	pandoc main.md \
 		-o "$@" \
-		--from=markdown \
+		--from=markdown+raw_tex \
 		--standalone \
 		--pdf-engine=xelatex \
 		--filter pandoc-citeproc \
 		--bibliography=references.bib \
 		--toc \
 		--number-sections \
+		-V geometry:margin=1in \
+		-V classoption=titlepage \
+		-V toc-title:"Table of Contents" \
+		-V header-includes="\AtEndPreamble{\let\oldtableofcontents\tableofcontents\renewcommand{\tableofcontents}{\oldtableofcontents\clearpage}}" \
 		--metadata=title:"$(TITLE)" \
 		--metadata=author:"$(AUTHOR)"
 

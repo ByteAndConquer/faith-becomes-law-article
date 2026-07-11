@@ -1,6 +1,4 @@
-# When Faith Becomes Law: Christianity, Political Power, and the Limits of Religious Authority
-
-## Abstract
+# Abstract {-}
 
 Christianity has played a defining yet deeply contested role in shaping the political, legal, and cultural development of the United States and much of the wider world. Its influence can be seen in moral philosophy, civic language, education, reform movements, charity, abolitionist thought, civil rights activism, and concepts of human dignity. Yet this influence has never been politically neutral. When Christianity moves from moral persuasion into governmental authority, it risks becoming not a source of conscience but an instrument of control. The central concern is not the presence of faith in public life, but the transformation of faith into law—particularly when one religious tradition is used to define public morality, restrict individual rights, and determine who fully belongs within the political community.
 
@@ -8,23 +6,7 @@ This article examines the tension between Christianity as a moral and cultural f
 
 The problem extends beyond Christianity alone. Across religious traditions, faith becomes coercive when it is fused with state power and used to impose one group’s beliefs on those outside the tradition. However, in the American context, Christianity occupies a uniquely influential position because of its long association with national identity and political legitimacy. This article contends that democratic society must distinguish between religious participation in public life and religious domination through law. Faith may guide individuals, communities, and moral debate, but when it becomes an instrument of state authority, it threatens pluralism, equality, and the very religious freedom it claims to defend.
 
-## Table of Contents
-
-- [Abstract](#abstract)
-- [Introduction: When Faith Becomes Political Authority](#introduction-when-faith-becomes-political-authority)
-- [Christianity as a Cultural and Moral Force](#christianity-as-a-cultural-and-moral-force)
-- [From Moral Persuasion to Legal Control](#from-moral-persuasion-to-legal-control)
-- [When Doctrine Polices Knowledge](#when-doctrine-polices-knowledge)
-- [Selective Literalism and Moral Convenience](#selective-literalism-and-moral-convenience)
-- [Performative Christianity and Political Legitimacy](#performative-christianity-and-political-legitimacy)
-- [Politicized Evangelicalism and Christian Nationalism](#politicized-evangelicalism-and-christian-nationalism)
-- [The Limits of Religious Authority](#the-limits-of-religious-authority)
-- [Consequences for Those Outside the Dominant Faith](#consequences-for-those-outside-the-dominant-faith)
-- [Global and Interreligious Comparison](#global-and-interreligious-comparison)
-- [Counterargument: Religious Participation Versus Religious Domination](#counterargument-religious-participation-versus-religious-domination)
-- [Conclusion: Protecting Faith by Limiting Power](#conclusion-protecting-faith-by-limiting-power)
-- [References](#references)
-
+\newpage
 
 # Introduction: When Faith Becomes Political Authority
 
@@ -690,6 +672,6 @@ History has already shown what happens when governments decide they speak for Go
 The lesson is not that faith has no place in public life. The lesson is that no government should ever mistake itself for the voice of God.
 
 
-# References
+# References {-}
 
 See [`references.bib`](references.bib) for citation metadata.
