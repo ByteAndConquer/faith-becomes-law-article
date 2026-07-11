@@ -19,10 +19,13 @@ jobs:
           fetch-depth: 0
 
       - name: Install build dependencies
+        env:
+          DEBIAN_FRONTEND: noninteractive
         run: |
           apt-get update
           apt-get install -y \
             pandoc \
+            pandoc-citeproc \
             python3 \
             texlive-xetex \
             texlive-fonts-recommended \

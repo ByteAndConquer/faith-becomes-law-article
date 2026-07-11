@@ -21,7 +21,7 @@ $(OUTPUT_DIR)/$(PDF_NAME): main.md references.bib
 		--from=markdown \
 		--standalone \
 		--pdf-engine=xelatex \
-		--citeproc \
+		--filter pandoc-citeproc \
 		--bibliography=references.bib \
 		--toc \
 		--number-sections \
