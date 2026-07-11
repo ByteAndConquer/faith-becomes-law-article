@@ -60,7 +60,7 @@ Sometimes government claims to speak for God. Sometimes government claims author
 
 China is particularly important because it exposes the deeper argument beneath the religious examples. The ultimate danger is not simply religion. The deeper danger is concentrated power wrapped in unquestionable moral certainty. An officially atheist government can surveil worship, edit sermons, recognize approved religious leaders, close churches, imprison believers, and restructure faith according to party ideology. Secular authoritarianism is not rescued by the absence of theology. The owner of conscience has merely changed uniforms.
 
-The principle must therefore remain universal. Christian domination is wrong. Islamic theocracy is wrong. Hindu nationalism that makes minorities conditional citizens is wrong. Buddhist nationalism used to mark Muslims as foreign or dangerous is wrong. Jewish religious nationalism used to justify permanent inequality or territorial domination is wrong. An atheist state that imprisons, supervises, edits, or eliminates independent religious life is also wrong.
+The principle must therefore remain universal. Christian domination is wrong. Islamic theocracy is wrong. Hindu nationalism that makes minorities conditional citizens is wrong. Buddhist nationalism used to mark Muslims as foreign or dangerous is wrong. Forms of Jewish religious nationalism that invoke divine entitlement to justify unequal legal status, denial of equal political rights, or permanent territorial domination are wrong. An atheist state that imprisons, supervises, edits, or eliminates independent religious life is also wrong.
 
 The objection cannot depend on whether the dominant worldview feels familiar.
 
