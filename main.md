@@ -671,6 +671,13 @@ History has already shown what happens when governments decide they speak for Go
 
 The lesson is not that faith has no place in public life. The lesson is that no government should ever mistake itself for the voice of God.
 
+\clearpage
+
+# AI Assistance Disclosure {-}
+
+The author used ChatGPT, developed by OpenAI, to assist with outlining, drafting, revising, source organization, citation-formatting checks, and document preparation. The author reviewed and edited all generated material, independently evaluated the cited sources, and assumes full responsibility for the article’s arguments, accuracy, and final wording.
+
+\clearpage
 
 # References {-}
 

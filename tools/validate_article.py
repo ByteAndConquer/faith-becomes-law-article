@@ -65,7 +65,16 @@ def main() -> int:
             article,
             flags=re.MULTILINE | re.DOTALL,
         )
-        if not embedded or embedded.group(0).strip() != section_text:
+
+        embedded_section = ""
+        if embedded:
+            embedded_section = re.sub(
+                r"(?m)\n\s*\\(?:newpage|clearpage)\s*$",
+                "",
+                embedded.group(0).strip(),
+            ).strip()
+
+        if not embedded or embedded_section != section_text:
             errors.append(
                 f"{section_file.relative_to(ROOT)} does not exactly match its section in main.md"
             )
