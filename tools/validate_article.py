@@ -32,11 +32,22 @@ def main() -> int:
     abstract_file = ABSTRACT.read_text(encoding="utf-8").strip()
     abstract_body = re.sub(r"^# Abstract\s*", "", abstract_file, count=1).strip()
     abstract_match = re.search(
-        r"^## Abstract\s*\n(.*?)\n## Table of Contents",
+        r"^#{1,6}\s+Abstract(?:\s+\{[^}]*\})?\s*$"
+        r"(.*?)"
+        r"(?=^#{1,6}\s+|\Z)",
         article,
         flags=re.MULTILINE | re.DOTALL,
     )
-    if not abstract_match or abstract_match.group(1).strip() != abstract_body:
+
+    embedded_abstract = ""
+    if abstract_match:
+        embedded_abstract = re.sub(
+            r"(?m)^\s*\\(?:newpage|clearpage)\s*$",
+            "",
+            abstract_match.group(1),
+        ).strip()
+
+    if not abstract_match or embedded_abstract != abstract_body:
         errors.append("abstract.md does not match the Abstract embedded in main.md")
 
     section_files = sorted(SECTIONS.glob("[0-9][0-9]-*.md"))
