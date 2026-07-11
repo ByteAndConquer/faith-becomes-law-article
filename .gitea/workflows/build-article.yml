@@ -1,15 +1,15 @@
-name: Build Article PDF + Submission Package
+name: Build Article PDF and Submission Package
 
-on:
+"on":
   push:
     tags:
-      - 'draft-*'
-      - 'v*'
-      - 'submission-*'
+      - "draft-*"
+      - "v*"
+      - "submission-*"
+  workflow_dispatch:
 
 jobs:
   build:
-    # Use your self-hosted runner
     runs-on: byteplease-runner-1
 
     steps:
@@ -18,61 +18,65 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install Pandoc + TeX Live
+      - name: Install build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc texlive-xetex texlive-fonts-recommended zip
+          sudo apt-get install -y \
+            pandoc \
+            python3 \
+            texlive-xetex \
+            texlive-fonts-recommended \
+            texlive-latex-extra \
+            zip
 
-      - name: Set version and filename
-        id: vars
+      - name: Resolve build version
+        shell: bash
         run: |
-          VERSION=${GITHUB_REF_NAME}
-          TRUNCATED_TITLE="When_Faith_Becomes_Law"
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "PDF_NAME=${TRUNCATED_TITLE}_${VERSION}.pdf" >> $GITHUB_ENV
-          echo "ZIP_NAME=${TRUNCATED_TITLE}_${VERSION}_submission_package.zip" >> $GITHUB_ENV
+          set -euo pipefail
+          VERSION="${GITHUB_REF_NAME:-manual-$(date -u +%Y%m%d-%H%M%S)}"
+          SAFE_VERSION="${VERSION//\//-}"
+          echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
+          echo "PDF_NAME=When_Faith_Becomes_Law_${SAFE_VERSION}.pdf" >> "$GITHUB_ENV"
+          echo "ZIP_NAME=When_Faith_Becomes_Law_${SAFE_VERSION}_submission_package.zip" >> "$GITHUB_ENV"
+
+      - name: Validate article sources
+        run: python3 tools/validate_article.py
 
       - name: Build PDF
-        run: |
-          mkdir -p output
-          pandoc main.md -o "output/${{ env.PDF_NAME }}" \
-            --from markdown \
-            --pdf-engine=xelatex \
-            --citeproc \
-            --bibliography=references.bib \
-            --csl=chicago-author-date.csl \
-            --toc \
-            --number-sections \
-            --variable=title:"When Faith Becomes Law: Christianity, Political Power, and the Limits of Religious Authority" \
-            --variable=author:"Your Name" \
-            --variable=date:"$(date +'%B %Y')"
+        run: make PDF_NAME="${PDF_NAME}" pdf
 
-      - name: Create Clean Submission Package
+      - name: Create submission package
+        shell: bash
         run: |
+          set -euo pipefail
+          rm -rf submission_package
           mkdir -p submission_package
-          cp main.md abstract.md outline.md submission_package/ 2>/dev/null || true
-          cp references.bib submission_package/ 2>/dev/null || true
-          cp -r sections/ submission_package/ 2>/dev/null || true
-          cp README.md submission_package/ 2>/dev/null || true
-          
-          cat > submission_package/README_Submission.txt << EOF
+          cp main.md abstract.md outline.md references.bib README.md submission_package/
+          cp -r sections tools submission_package/
+          cp "output/${PDF_NAME}" submission_package/
+
+          cat > submission_package/README_Submission.txt <<EOF_PACKAGE
           Submission Package - When Faith Becomes Law
-          Version: ${{ env.VERSION }}
-          Generated: $(date)
+          Version: ${VERSION}
+          Generated: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
 
           Files included:
-          - main.md                  (full article)
+          - main.md
           - abstract.md
           - outline.md
-          - sections/                (individual sections)
+          - sections/
           - references.bib
-          - ${{ env.PDF_NAME }}
-          EOF
+          - tools/validate_article.py
+          - README.md
+          - ${PDF_NAME}
+          EOF_PACKAGE
 
-          cp "output/${{ env.PDF_NAME }}" submission_package/
-          cd submission_package && zip -r "../output/${{ env.ZIP_NAME }}" .
+          (
+            cd submission_package
+            zip -r "../output/${ZIP_NAME}" .
+          )
 
-      - name: Upload Artifacts
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Article_Build_${{ env.VERSION }}
@@ -80,3 +84,4 @@ jobs:
             output/*.pdf
             output/*.zip
           retention-days: 90
+          if-no-files-found: error

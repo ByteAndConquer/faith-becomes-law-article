@@ -1,4 +1,7 @@
-﻿output/
+output/
+submission_package/
+stats.md
 *.pdf
+*.zip
 .DS_Store
 Thumbs.db
