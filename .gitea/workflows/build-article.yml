@@ -80,7 +80,7 @@ jobs:
           )
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: Article_Build_${{ env.VERSION }}
           path: |
